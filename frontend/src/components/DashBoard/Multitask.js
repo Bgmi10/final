@@ -34,7 +34,7 @@ export const Multitask = () => {
 
       if (response.ok) {
         const data = await response.json();
-        toast.success("Task created successfully: " + data.message);
+        toast.success(data.message);
       } else {
         const errorData = await response.json();
         toast.error(errorData.error || "Failed to create task");

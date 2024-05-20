@@ -169,7 +169,7 @@ router.get('/tasks/:userId', async (req, res) => {
 
     try {
         // Find tasks assigned to the user
-        const tasks = await Task.find({ user: userId });
+        const tasks = await Task.find({ userId: userId });
 
         // Check if tasks exist
         if (tasks.length > 0) {

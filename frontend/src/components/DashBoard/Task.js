@@ -8,6 +8,7 @@ import { api_rout_url } from '../../utils/Constants';
 const Task = () => {
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
+    console.log(selectedUsers)
     const [taskFormData, setTaskFormData] = useState({ title: '', description: '', status: '', deadline: { day: '', month: '', year: '' } });
     const [creatingTask, setCreatingTask] = useState(false);
 
@@ -53,6 +54,7 @@ const Task = () => {
                 deadline: `${taskFormData.deadline.year}-${taskFormData.deadline.month}-${taskFormData.deadline.day}`
             }));
 
+            console.log (tasks)
             const response = await fetch(`${api_rout_url}/api/auth/tasks`, {
                 method: 'POST',
                 headers: {

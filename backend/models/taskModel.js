@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const taskSchema = new mongoose.Schema({
     title: {
         type: String,
-        
-    },
+     },
     description: {
         type: String,
      
@@ -14,7 +13,12 @@ const taskSchema = new mongoose.Schema({
         type: Number,
         default: 0 // You can define your own status codes, e.g., 0 for pending, 1 for completed, etc.
     },
-    user: {
+       
+ username: {
+    type: String,
+ },
+
+ userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // Reference to the User model
        

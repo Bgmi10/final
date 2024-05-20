@@ -26,8 +26,7 @@ export const Taskforalluser = () => {
         // Parse the responses
         const taskData = await taskResponse.json();
         const usersData = await userResponse.json();
-        console.log(usersData);
-        console.log(taskData);
+       
 
         // Map user IDs to usernames
         const userNamesMap = usersData?.users?.reduce((acc, user) => {

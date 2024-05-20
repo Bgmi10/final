@@ -16,6 +16,7 @@ const Taskpage = () => {
         const fetchTasks = async () => {
             try {
                 const authToken = sessionStorage.getItem('userId');
+               
                 if (!authToken) {
                     throw new Error('User is not authenticated');
                 }
