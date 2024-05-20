@@ -2,11 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { api_rout_url } from '../../utils/Constants'
 
 
-
-
-
-
-
 export const Regulartask = () => {
 
     const [data , setdata]= useState("")
@@ -61,9 +56,31 @@ export const Regulartask = () => {
        ))
        }
        </div> :
-        <div key={data._id}>
-            <p className='text-white'>{data?.[0]?.title}</p>
-        </div>    
+        <div>
+        
+ 
+         <tr  >
+             <table className='mb-5 mt-10'>
+             <thead className='text-gray-400'>
+                 <th className="border border-gray-00 py-2 px-4 sm:w-1/5">Title</th>
+                 <th className="border border-gray-400 py-2 px-4 sm:w-1/5">Description</th>
+                 <th className="border border-gray-400 py-2 px-4 sm:w-1/5">Status</th>
+                 <th className="border border-gray-400 py-2 px-4 sm:w-1/5">Deadline</th>
+                 <th className="border border-gray-400 py-2 px-4 sm:w-1/5">Progress</th>
+                 </thead>
+            
+             <td className='border border-gray-400 text-gray-400'>{data?.[0]?.title}</td>
+             <td className='border border-gray-400 text-gray-400'>{data?.[0]?.description}</td>
+             <td className='border border-gray-400 text-gray-400'>{data?.[0]?.status}</td>
+             <td className='border border-gray-400 text-gray-400'>{data?.[0]?.deadline.day}-{data?.[0]?.deadline.month}-{data?.[0]?.deadline.year}</td>
+             <td className='border border-gray-400 text-gray-400'>no progress</td>
+            
+             </table>
+            
+         </tr>    
+         
+    
+        </div>   
        
         }
        

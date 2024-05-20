@@ -252,6 +252,27 @@ router.get("/regulartask" , async (req, res ) =>{
   res.status(201).json( regulartask );
 
 })
+
+
+router.put( "/update/status",async (req, res, next) => {
+  const status = {
+    status: req.body.status,
+   
+  };
+
+  await Task.find( status, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    message:"status updated Successfully"
+  });
+});
+
+
 module.exports = router;
 
 
