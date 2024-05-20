@@ -6,6 +6,7 @@ import { toggleVisibility, selectLeftSideVisibility , toggleDarkTheme, selectDar
 import { useNavigate } from 'react-router-dom';
 import Taskpage from './Taskpage';
 import { api_rout_url } from '../../utils/Constants';
+import { Regulartask  } from './Regulartask';
 
 
  const AppHeader = () => {
@@ -42,6 +43,11 @@ import { api_rout_url } from '../../utils/Constants';
   const handletask = () => {
     setSelectedContent("task");
   };
+
+  const handleregulartask = () => {
+    setSelectedContent("Regular task");
+  };
+
 
  
   const handlelogout = async () => {
@@ -113,7 +119,7 @@ import { api_rout_url } from '../../utils/Constants';
             <ol className='flex flex-col mt-7 ml-4 text-lg text-gray-600'>
               <li className={`mb-2 cursor-pointer ${selectedContent === 'dashboard' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleDashboard}>Dashboard</li>
               <li className={`mb-2 cursor-pointer ${selectedContent === 'Tasks' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleusers}>Tasks</li>
-              
+              <li className={`mb-2 cursor-pointer ${selectedContent === 'Regular task' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleregulartask}>Regular Taks</li >
             </ol>
           </div>
         )}
@@ -121,6 +127,7 @@ import { api_rout_url } from '../../utils/Constants';
       
       </div>
       {selectedContent === 'Tasks' && <Taskpage />}
+      {selectedContent === 'Regular task' && <Regulartask />}
      
     </div>
   );

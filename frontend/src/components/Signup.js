@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,7 +33,6 @@ const Signup = () => {
     const [phoneError, setPhoneError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
-    const usehref = useRef();
 
     const handleClickShowPassword = () => {
         setisshowpassword(!isshowPassword);
@@ -56,38 +55,39 @@ const Signup = () => {
             if (!isEmailValid) {
                 setEmailError("Invalid email address");
                 toast.error("Invalid email address");
+                return;
             }
             if (!isPasswordValid) {
                 setPasswordError("Invalid password");
                 toast.error("Invalid password");
+                return;
             }
             if (!isPhoneValid) {
                 setPhoneError("Invalid phone number");
                 toast.error("Invalid phone number");
+                return;
             }
 
-            if (isEmailValid && isPasswordValid && isPhoneValid) {
-                const response = await fetch(`${api_rout_url}/api/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, email, phone, password })
-                });
+            const response = await fetch(`${api_rout_url}/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, phone, password })
+            });
 
-                if (response.ok) {
-                    const user = { name, email, phone };
-                    setRegistrationSuccess(true);
-                    dispatch(register(user));
-                    setIsLogin(true);
-                    toast.success("Registration successful");
+            if (response.ok) {
+                const user = { name, email, phone };
+                setRegistrationSuccess(true);
+                dispatch(register(user));
+                setIsLogin(true);
+                toast.success("Registration successful");
+            } else {
+                const data = await response.json();
+                if (data.message) {
+                    toast.error(data.message);
                 } else {
-                    const data = await response.json();
-                    if (data.message) {
-                        setEmailError(data.message);
-                        toast.error(data.message);
-                    }
-                    console.error("Registration failed");
+                    toast.error("Registration failed");
                 }
             }
         } catch (error) {
@@ -119,11 +119,15 @@ const Signup = () => {
                 } else if (userRole === "user") {
                     window.location.href = "/dashboard/user";
                 } else {
-                    console.log("Please contact admin to update your role");
+                    toast.error("Please contact admin to update your role");
                 }
             } else {
-                console.error("Login failed:", response.statusText);
-                toast.error("Login failed");
+                const data = await response.json();
+                if (data.message) {
+                    toast.error(data.message);
+                } else {
+                    toast.error("Login failed");
+                }
             }
         } catch (error) {
             console.error("Error during login:", error);

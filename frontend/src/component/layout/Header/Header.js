@@ -107,6 +107,12 @@ const Logo = styled.div`
   @media (max-width: 768px) {
     display: ${({ showLogo }) => (showLogo ? "flex" : "none")}; 
     margin-right: auto;
+    width:80px;
+
+    margin-top : 50px;
+    margin-radius: 100px
+    
+    
     /* Reverse the display for small devices */
   }
 

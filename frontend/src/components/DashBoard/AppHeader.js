@@ -8,6 +8,8 @@ import UsersPage from './Userspage';
 import Task  from './Task';
 import './global.css'
 import {api_rout_url} from '../../utils/Constants'
+import { Taskforalluser } from './Taskforalluser';
+import { Multitask } from './Multitask';
 
 
 const AppHeader = () => {
@@ -45,6 +47,16 @@ const AppHeader = () => {
     setSelectedContent("task");
   };
 
+  const handleallusertask = () => {
+    setSelectedContent("All users task");
+  };
+
+  const handletaskforeveryuser = () =>{
+    setSelectedContent("Assign task to every users")
+
+  }
+
+
   const handlelogout = async () => {
     try {
       const response = await fetch(`${api_rout_url}/api/auth/logout`, {
@@ -78,6 +90,7 @@ const AppHeader = () => {
             <li className={`mb-2 cursor-pointer ml-4 ${selectedContent === 'dashboard' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleDashboard}>Dashboard</li>
             <li className={`mb-2 cursor-pointer ml-4 ${selectedContent === 'users' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleusers}>Users</li>
             <li className={`mb-2 cursor-pointer ml-4 ${selectedContent === 'task' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handletask}>Task</li>
+            
           </ol>
         </div>
 
@@ -115,7 +128,10 @@ const AppHeader = () => {
               <li className={`mb-2 cursor-pointer ${selectedContent === 'dashboard' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleDashboard}>Dashboard</li>
               <li className={`mb-2 cursor-pointer ${selectedContent === 'users' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handleusers}>Users</li>
               <li className={`mb-2 cursor-pointer ${selectedContent === 'task' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handletask}>Task</li>
-            </ol>
+              <li className={`mb-2 cursor-pointer ${selectedContent === 'All users task' ? 
+              'text-blue-600' : 'text-gray-400'}`} onClick={handleallusertask}>All users task</li>
+               <li className={`mb-2 cursor-pointer ${selectedContent === 'Assign task to every users' ? 'text-blue-600' : 'text-gray-400'}`} onClick={handletaskforeveryuser}>Assign task to every users</li>
+              </ol>
           </div>
         )}
 
@@ -123,6 +139,8 @@ const AppHeader = () => {
       </div>
       {selectedContent === 'users' && <UsersPage />}
       {selectedContent === "task" && <Task  selectedContent={selectedContent}/>}
+      {selectedContent === "All users task" && <Taskforalluser  selectedContent={selectedContent}/>}
+      {selectedContent === "Assign task to every users" && <Multitask  selectedContent={selectedContent}/>}
     </div>
   );
 }

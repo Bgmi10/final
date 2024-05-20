@@ -4,8 +4,9 @@ const sendToken = require("../utils/jwttoken")
 const User = require('../models/userModel'); 
 const catchAsyncErrors = require("../Middleware/catchasyncerr")
 const Task = require('../models/taskModel')
-
+const Regulartask = require('../models/Regulartaskmodel')
 const Book = require('../models/bookmodel')
+
 
 
 
@@ -142,26 +143,24 @@ router.delete("/user/delete/:id", async (req, res, next) => {
       next(error); // Pass any error to the error handler
   }
 });
+
+
 router.post('/tasks', async (req, res) => {
+  const { tasks } = req.body; // Expecting an array of tasks
+
+  if (!tasks || !Array.isArray(tasks)) {
+      return res.status(400).json({ error: 'Invalid tasks data' });
+  }
+
   try {
-    const { title, description, status, userId , deadline } = req.body;
-    // Create a new task
-    const task = new Task({
-      title,
-      description,
-      status,
-      user: userId ,
-      deadline: deadline,
-      // Corrected line
-    });
-    // Save the task to the database
-    await task.save();
-    res.status(201).json({ message: 'Task created successfully' });
+      const createdTasks = await Task.insertMany(tasks);
+      res.status(201).json({ tasks: createdTasks });
   } catch (error) {
-    console.error('Error creating task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+      console.error('Error creating tasks:', error);
+      res.status(500).json({ error: 'Failed to create tasks' });
   }
 });
+
 
 
 
@@ -212,8 +211,47 @@ router.post('/book', async (req, res) => {
 });
 
 
+router.get('/getalltask' , async (req, res)=>{
+  const users = await Task.find();
+
+  res.status(200).json({
+    success: true,
+    users,
+  });
 
 
+})
+
+
+router.post('/alltask' , async (req, res)=>{
+
+
+  const {title , description , status , day , month , year} = req.body
+
+  const task = new Regulartask({
+    title,
+    description,
+    status,
+   deadline:{
+    day,
+    month,
+    year
+   }
+
+  })
+
+  await task.save();
+  res.status(201).json({ message: 'Task created successfully' });
+})
+
+
+router.get("/regulartask" , async (req, res ) =>{
+  const regulartask = await Regulartask.find()
+
+
+  res.status(201).json( regulartask );
+
+})
 module.exports = router;
 
 
